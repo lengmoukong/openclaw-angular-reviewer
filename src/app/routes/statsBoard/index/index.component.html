@@ -1,0 +1,229 @@
+<div class="data-statistics-page">
+  <!-- 顶部操作栏 -->
+  <div class="w-page-header">
+    <span>数据统计</span>
+    <button nz-button nzType="primary" class="query-btn">返回</button>
+  </div>
+  <div class="top-bar">
+    <nz-tabset nzType="card" [nzSelectedIndex]="tabsetActive" (nzSelectChange)="onTabsChange($event)">
+      <nz-tab nzTitle="月报">
+        <div>
+          <nz-card [nzBordered]="false" class="card-box">
+            <div class="tabs-box">
+              <span class="tabs-item" *ngFor="let item of tabsBox,let i=index;" [ngClass]="{'active':active==i}"
+                (click)="onTabsBoxChange(i)">{{item.name}}</span>
+            </div>
+            <div class="card-content">
+              <!-- 月报 -->
+              <div nz-row>
+                <div nz-col [nzSpan]="12">
+                  <div class="sum-title">创建任务数</div>
+                  <app-chart-bar [height]="'400px'" [legend]="barChartObj.name" [xAxisData]="barChartObj.xAxisData"
+                    [seriesData]="barChartObj.seriesData" [color]="'#3068c1'">
+                  </app-chart-bar>
+                </div>
+                <div nz-col [nzSpan]="12">
+                  <div class="sum-title">平均排队时长</div>
+                  <app-chart-bar [height]="'400px'" [legend]="barChartObj2.name" [xAxisData]="barChartObj2.xAxisData"
+                    [seriesData]="barChartObj2.seriesData" [color]="'#6db4bc'">
+                  </app-chart-bar>
+                </div>
+                <div nz-col [nzSpan]="24">
+                  <div class="sum-title">部门数据详情</div>
+                  <!-- 部门数据详情表格 -->
+                  <nz-table #basicTable [nzData]="departmentData" [nzShowPagination]="false">
+                    <thead>
+                      <tr>
+                        <th>部门名称</th>
+                        <th>累计开通人数（截至xx月xx日）</th>
+                        <th>累计消耗算力</th>
+                        <th>平均完成时长 (h)</th>
+                        <th>平均运行时长（h）</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of basicTable.data">
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.activateNum }}</td>
+                        <td>{{ data.consumeCom }}</td>
+                        <td>{{ data.avgCompletionTime }}</td>
+                        <td>{{ data.avgRunningTime }}</td>
+                      </tr>
+                    </tbody>
+                  </nz-table>
+                  <!-- 整体统计数据 -->
+                  <div class="sum-title mv24">整体统计数据</div>
+                  <nz-table #basicOverallTable [nzData]="overallData" [nzShowPagination]="false">
+                    <thead>
+                      <tr>
+                        <th>统计项目</th>
+                        <th>数值</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of basicOverallTable.data">
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.num }}</td>
+
+                      </tr>
+                    </tbody>
+                  </nz-table>
+                </div>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+
+      </nz-tab>
+      <nz-tab nzTitle="季报">
+        <div style="margin-top: 0px;">
+          <nz-card [nzBordered]="false" class="card-box">
+            <!-- 搜索条件 -->
+            <div class="search-box mb15">
+              <nz-select style="width: 300px;" [(ngModel)]="multipleValue" [nzSize]="'default'" nzMode="multiple"
+                nzPlaceHolder="请选择部门名称">
+                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label"
+                  [nzValue]="option.value"></nz-option>
+              </nz-select>
+              <nz-select ngModel="2024" style="width: 150px;" class="ml10" nzPlaceHolder="请选择年份">
+                <nz-option nzValue="2024" nzLabel="2024"></nz-option>
+                <nz-option nzValue="2025" nzLabel="2025"></nz-option>
+                <nz-option nzValue="2026" nzLabel="2026"></nz-option>
+              </nz-select>
+              <button nz-button nzType="primary" class="query-btn ml10">查询</button>
+            </div>
+            <div class="tabs-box">
+              <span class="tabs-item" *ngFor="let item of tabsBox,let i=index;" [ngClass]="{'active':active==i}"
+                (click)="onTabsBoxChange(i)">{{item.name}}</span>
+            </div>
+            <div class="card-content">
+              <!-- 季榜 -->
+              <div nz-row>
+                <div nz-col [nzSpan]="12">
+                  <div class="sum-title">创建任务数</div>
+                  <app-chart-line [height]="'400px'" [legend]="lineChartObj.name" [xAxisData]="lineChartObj.xAxisData"
+                    [seriesData]="lineChartObj.seriesData" [colors]="['#3068c1', '#6db4bc']">
+                  </app-chart-line>
+                </div>
+                <div nz-col [nzSpan]="12">
+                  <div class="sum-title">监测方案数</div>
+                  <app-chart-line [height]="'400px'" [legend]="lineChartObj2.name" [xAxisData]="lineChartObj2.xAxisData"
+                    [seriesData]="lineChartObj2.seriesData" [colors]="['#3068c1', '#6db4bc']">
+                  </app-chart-line>
+                </div>
+
+              </div>
+            </div>
+          </nz-card>
+          <div class="header-title mb15">
+            <span class="text">数据产品统计</span>
+            <div class="search-box">
+              <nz-cascader [nzOptions]="filterOptions" [nzPlaceHolder]="'请选择季度'" [(ngModel)]="values" (ngModelChange)="onFilterChanges($event)"></nz-cascader>
+              <button nz-button nzType="primary" class="query-btn ml10">查询</button>
+            </div>
+          </div>
+          <nz-card [nzBordered]="false" class="card-box">
+            <div class="sum-title mb24">外部数据产品系统整体使用情况</div>
+            <nz-table #basicJTable1 [nzData]="wholeTableData" [nzShowPagination]="false">
+              <thead>
+                <tr>
+                  <th>评估指标</th>
+                  <th [nzAlign]="'center'">2025年第一季度</th>
+                  <th [nzAlign]="'center'">2024年第一季度</th>
+                  <th [nzAlign]="'center'">环比数据</th>
+                  <th [nzAlign]="'center'">2024年第四季度</th>
+                  <th [nzAlign]="'center'">同比数据</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicJTable1.data">
+                  <td>{{ data.name }}</td>
+                  <td [nzAlign]="'center'">{{ data.nowNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastSomeNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.monthNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.yearNum }}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <div class="sum-title mv24">品牌影响力</div>
+             <nz-table #basicJTable2 [nzData]="brandInfluence" [nzShowPagination]="false">
+               <thead>
+                <tr>
+                  <th>评估指标</th>
+                  <th [nzAlign]="'center'">2025年第一季度</th>
+                  <th [nzAlign]="'center'">2024年第一季度</th>
+                  <th [nzAlign]="'center'">环比数据</th>
+                  <th [nzAlign]="'center'">2024年第四季度</th>
+                  <th [nzAlign]="'center'">同比数据</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicJTable2.data">
+                  <td>{{ data.name }}</td>
+                  <td [nzAlign]="'center'">{{ data.nowNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastSomeNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.monthNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.yearNum }}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <div class="sum-title mv24">全网热点舆情分析</div>
+             <nz-table #basicJTable3 [nzData]="hotspotTableData" [nzShowPagination]="false">
+             <thead>
+                <tr>
+                  <th>评估指标</th>
+                  <th [nzAlign]="'center'">2025年第一季度</th>
+                  <th [nzAlign]="'center'">2024年第一季度</th>
+                  <th [nzAlign]="'center'">环比数据</th>
+                  <th [nzAlign]="'center'">2024年第四季度</th>
+                  <th [nzAlign]="'center'">同比数据</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicJTable3.data">
+                  <td>{{ data.name }}</td>
+                  <td [nzAlign]="'center'">{{ data.nowNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastSomeNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.monthNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.yearNum }}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <div class="sum-title mv24">微博传播效果分析</div>
+             <nz-table #basicJTable4 [nzData]="wbTableData" [nzShowPagination]="false">
+               <thead>
+                <tr>
+                  <th>评估指标</th>
+                  <th [nzAlign]="'center'">2025年第一季度</th>
+                  <th [nzAlign]="'center'">2024年第一季度</th>
+                  <th [nzAlign]="'center'">环比数据</th>
+                  <th [nzAlign]="'center'">2024年第四季度</th>
+                  <th [nzAlign]="'center'">同比数据</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of basicJTable4.data">
+                  <td>{{ data.name }}</td>
+                  <td [nzAlign]="'center'">{{ data.nowNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastSomeNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.monthNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.lastNum }}</td>
+                  <td [nzAlign]="'center'">{{ data.yearNum }}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </nz-card>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+    <div class="top-bar-action">
+      <nz-range-picker [nzFormat]="dateFormat"></nz-range-picker>
+      <button nz-button nzType="primary" class="query-btn ml10" *ngIf="tabsetActive==0">查询</button>
+      <button nz-button nzType="primary" class="download-btn ml10">下载</button>
+    </div>
+  </div>
+
+</div>

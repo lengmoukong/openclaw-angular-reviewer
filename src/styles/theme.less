@@ -1,0 +1,32 @@
+// You can directly set the default theme
+// - `default` Default theme
+// - `dark` Import the official dark less style file
+// - `compact` Import the official compact less style file
+@import '@delon/theme/theme-default.less';
+body {
+  overflow: auto !important;
+}
+// ==========The following is the custom theme variable area==========
+// The theme paraments can be generated at https://ng-alain.github.io/ng-alain/
+// @primary-color: #f50;
+// 主题色（NG-ZORRO 组件的主色调，如按钮、链接）
+@primary-color: #3D72CC; // 默认蓝色，可改为你的品牌色，如 #52c41a（绿色）
+
+// 背景色（页面整体背景）
+@body-background: #e7eaec; // 默认浅灰背景
+
+// 文字颜色
+@text-color: #424242; // 主要文字颜色
+@text-color-secondary: #757575; // 次级文字颜色
+
+// 布局组件背景色（侧边栏、头部）
+@layout-sider-background: #001529; // 侧边栏背景（默认深蓝黑）
+@layout-header-background: #ffffff; // 顶部栏背景
+
+// 卡片背景色
+@card-background: #ffffff;
+
+// 成功、警告、错误等状态色
+@success-color: #52c41a;
+@warning-color: #faad14;
+@error-color: #ff4d4f;
