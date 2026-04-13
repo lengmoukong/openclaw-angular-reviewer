@@ -1,0 +1,121 @@
+<div class="review-dashboard">
+  <!-- 头部统计 -->
+  <div class="dashboard-header">
+    <h1>代码审查看板</h1>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">128</div>
+        <div class="stat-label">待审核</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">45</div>
+        <div class="stat-label">审核中</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">892</div>
+        <div class="stat-label">本月已完成</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">98.5%</div>
+        <div class="stat-label">通过率</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主体内容 -->
+  <div class="dashboard-body">
+    <!-- 左侧：MR 列表 -->
+    <div class="mr-section">
+      <div class="section-header">
+        <h2>合并请求</h2>
+        <div class="filter-tabs">
+          <button class="tab active">待我审核</button>
+          <button class="tab">我创建的</button>
+          <button class="tab">全部</button>
+        </div>
+      </div>
+      
+      <div class="mr-list">
+        <div class="mr-item priority-high">
+          <div class="mr-info">
+            <div class="mr-title">feat: 优化数据库查询性能</div>
+            <div class="mr-meta">
+              <span class="author">lz</span>
+              <span class="project">openclaw-backend</span>
+              <span class="time">2小时前</span>
+            </div>
+          </div>
+          <div class="mr-status">
+            <span class="badge urgent">紧急</span>
+            <span class="comments">💬 5</span>
+          </div>
+        </div>
+
+        <div class="mr-item priority-medium">
+          <div class="mr-info">
+            <div class="mr-title">fix: 修复登录态过期问题</div>
+            <div class="mr-meta">
+              <span class="author">lz</span>
+              <span class="project">openclaw-frontend</span>
+              <span class="time">4小时前</span>
+            </div>
+          </div>
+          <div class="mr-status">
+            <span class="badge normal">普通</span>
+            <span class="comments">💬 2</span>
+          </div>
+        </div>
+
+        <div class="mr-item priority-low">
+          <div class="mr-info">
+            <div class="mr-title">docs: 更新 API 文档</div>
+            <div class="mr-meta">
+              <span class="author">lz</span>
+              <span class="project">openclaw-docs</span>
+              <span class="time">1天前</span>
+            </div>
+          </div>
+          <div class="mr-status">
+            <span class="badge low">低优</span>
+            <span class="comments">💬 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：审核动态 -->
+    <div class="activity-section">
+      <h2>审核动态</h2>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon approved">✓</div>
+          <div class="activity-content">
+            <p><strong>lz</strong> 通过了 <span class="link">#2345</span></p>
+            <span class="activity-time">10分钟前</span>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon commented">💬</div>
+          <div class="activity-content">
+            <p><strong>lz</strong> 评论了 <span class="link">#2342</span></p>
+            <span class="activity-time">32分钟前</span>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon rejected">✕</div>
+          <div class="activity-content">
+            <p><strong>lz</strong> 驳回了 <span class="link">#2338</span></p>
+            <span class="activity-time">1小时前</span>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon submitted">📝</div>
+          <div class="activity-content">
+            <p><strong>lz</strong> 提交了 <span class="link">#2350</span></p>
+            <span class="activity-time">2小时前</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

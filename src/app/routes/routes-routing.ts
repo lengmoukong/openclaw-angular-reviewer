@@ -5,6 +5,7 @@ import { authSimpleCanActivate, authSimpleCanActivateChild } from '@delon/auth';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutBasicComponent } from '../layout';
 import { LayoutDefaultComponent } from '../layout/default/default.component';
+import {ReviewComponent} from "./review/review.component";
 
 export const routes: Routes = [
   {
@@ -21,8 +22,9 @@ export const routes: Routes = [
     path: '',
     component: LayoutDefaultComponent,
     children: [
-      { path: '', redirectTo: 'other/page', pathMatch: 'full' },
+      { path: '', redirectTo: 'review', pathMatch: 'full' },
       { path: 'other', loadChildren: () => import('./statsBoard/statsBoard.routing').then(m => m.routes)  },
+      { path: 'review', component: ReviewComponent}
     ]
   },
   // passport
